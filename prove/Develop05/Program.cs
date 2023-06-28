@@ -1,31 +1,52 @@
-using System;
-
 class Program
 {
     static void Main(string[] args)
     {
-        GoalManager goalManager = new GoalManager();
+        EternalQuest quest = new EternalQuest();
 
-        // Add some goals
-        goalManager.AddGoal(new SimpleGoal("Run a marathon", 1000));
-        goalManager.AddGoal(new EternalGoal("Read scriptures", 100));
-        goalManager.AddGoal(new ChecklistGoal("Attend the temple", 50, 10));
+        bool exit = false;
+        while (!exit)
+        {
+            Console.WriteLine("Enter your choice:");
+            Console.WriteLine("1. Create goal");
+            Console.WriteLine("2. Record event");
+            Console.WriteLine("3. Display goals");
+            Console.WriteLine("4. Display score");
+            Console.WriteLine("5. Save goals");
+            Console.WriteLine("6. Load goals");
+            Console.WriteLine("7. Exit");
 
-        // Record events (accomplished goals)
-        goalManager.RecordEvent(0); // Run a marathon
-        goalManager.RecordEvent(1); // Read scriptures
-        goalManager.RecordEvent(2); // Attend the temple (1st time)
-        goalManager.RecordEvent(2); // Attend the temple (2nd time)
-        goalManager.RecordEvent(2); // Attend the temple (3rd time)
-        goalManager.RecordEvent(2); // Attend the temple (4th time)
-        goalManager.RecordEvent(2); // Attend the temple (5th time)
-        goalManager.RecordEvent(2); // Attend the temple (6th time)
-        goalManager.RecordEvent(2); // Attend the temple (7th time)
-        goalManager.RecordEvent(2); // Attend the temple (8th time)
-        goalManager.RecordEvent(2); // Attend the temple (9th time)
-        goalManager.RecordEvent(2); // Attend the temple (10th time)
+            int choice = int.Parse(Console.ReadLine());
 
-        // Display goals and score
-        goalManager.DisplayGoals();
-        Console.WriteLine($"Score: {goalManager.GetScore()}"); }
+            switch (choice)
+            {
+                case 1:
+                    quest.CreateGoal();
+                    break;
+                case 2:
+                    quest.RecordEvent();
+                    break;
+                case 3:
+                    quest.DisplayGoals();
+                    break;
+                case 4:
+                    quest.DisplayScore();
+                    break;
+                case 5:
+                    quest.SaveGoals();
+                    break;
+                case 6:
+                    quest.LoadGoals();
+                    break;
+                case 7:
+                    exit = true;
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice.");
+                    break;
+            }
+
+            Console.WriteLine();
+        }
+    }
 }

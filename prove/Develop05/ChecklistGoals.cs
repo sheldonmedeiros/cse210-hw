@@ -1,31 +1,24 @@
-using System;
-using System.Collections.Generic;
-
-public class ChecklistGoal : Goal
+class ChecklistGoal : Goal
 {
-    private int _targetCount;
-    private int _currentCount;
+    public int TargetCount { get; set; }
+    public int CompletionCount { get; private set; }
+    public int BonusValue { get; set; }
 
-    public int CurrentCount { get { return _currentCount; } }
-    public int TargetCount { get { return _targetCount; } }
-
-    public ChecklistGoal(string description, int value, int targetCount)
+    public ChecklistGoal(string description, int targetCount, int value, int bonusValue)
     {
-        this.description = description;
-        this.value = value;
-        this._targetCount = targetCount;
-        this._currentCount = 0;
+        Description = description;
+        TargetCount = targetCount;
+        Value = value;
+        BonusValue = bonusValue;
     }
 
-    public override void MarkComplete()
+    public override void Complete()
     {
-        Console.WriteLine($"You recorded progress for the checklist goal: {description}");
-        _currentCount++;
-
-        if (_currentCount == _targetCount)
+        CompletionCount++;
+        if (CompletionCount == TargetCount)
         {
-            Console.WriteLine($"Congratulations! You achieved the checklist goal: {description}");
-            _currentCount = 0; // Reset the count
+            IsCompleted = true;
+            Value += BonusValue; // Apply bonus value when target count is reached
         }
     }
 }
