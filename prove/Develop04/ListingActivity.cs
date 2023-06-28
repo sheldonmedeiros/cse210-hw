@@ -1,42 +1,40 @@
-using System;
 
-public class BreathingActivity : Activity
+class ListingActivity : Activity
 {
-    private int _breathingInSec;
-    private int _breathingOutSec;
-
-
-    public BreathingActivity()
-        : base("Breathing")
+    private List<string> prompts = new List<string>
     {
-        _breathingInSec = 3;
-        _breathingOutSec = 3;
-    }
-     public BreathingActivity(int breathingIn, int breathingOut)
-        : base("Breathing")
+        "Who are people that you appreciate?",
+        "What are personal strengths of yours?",
+        "Who are people that you have helped this week?",
+        "When have you felt the Holy Ghost this month?",
+        "Who are some of your personal heroes?"
+    };
+
+    public ListingActivity() : base("Listing Activity", "This activity will help you reflect on the good things in your life by having you list as many things as you can in a certain area.")
     {
-        _breathingInSec = breathingIn;
-        _breathingOutSec = breathingOut;
     }
 
-    public void DisplayBreathing(int durationSecond, int breathingInSec, int breathingOutSec)
-    {   
+    protected override void PerformActivity()
+    {
+        Random random = new Random();
 
-        //Console.WriteLine(durationSecond);
-        int totalSecond = 0;
-        while (totalSecond < durationSecond)
+        string prompt = prompts[random.Next(prompts.Count)];
+        Console.WriteLine(prompt);
+        Thread.Sleep(5000); // Pause for 5 seconds to think
+
+        Console.WriteLine("Start listing items...");
+
+        // Simulating user input by entering items manually
+        List<string> items = new List<string>();
+        while (true)
         {
-            Console.Write("\nBreathe in...");
-            base.PauseCountdown(breathingInSec);
-            Console.WriteLine();
-            Console.Write("Now breathe out...");
-            base.PauseCountdown(breathingOutSec);
-            Console.WriteLine();
+            string item = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(item))
+                break;
 
-            totalSecond += breathingInSec + breathingOutSec;
-            //Console.WriteLine(totalSecond);
+            items.Add(item);
         }
 
+        Console.WriteLine($"Number of items listed: {items.Count}");
     }
-
 }

@@ -1,42 +1,18 @@
-using System;
-
-public class BreathingActivity : Activity
+class _BreathingActivity : Activity
 {
-    private int _breathingInSec;
-    private int _breathingOutSec;
-
-
-    public BreathingActivity()
-        : base("Breathing")
+    public _BreathingActivity() : base("Breathing Activity", "This activity will help you relax by walking you through breathing in and out slowly. Clear your mind and focus on your breathing.")
     {
-        _breathingInSec = 3;
-        _breathingOutSec = 3;
-    }
-     public BreathingActivity(int breathingIn, int breathingOut)
-        : base("Breathing")
-    {
-        _breathingInSec = breathingIn;
-        _breathingOutSec = breathingOut;
     }
 
-    public void DisplayBreathing(int durationSecond, int breathingInSec, int breathingOutSec)
-    {   
-
-        //Console.WriteLine(durationSecond);
-        int totalSecond = 0;
-        while (totalSecond < durationSecond)
+    protected override void PerformActivity()
+    {
+        for (int i = 0; i < duration; i++)
         {
-            Console.Write("\nBreathe in...");
-            base.PauseCountdown(breathingInSec);
-            Console.WriteLine();
-            Console.Write("Now breathe out...");
-            base.PauseCountdown(breathingOutSec);
-            Console.WriteLine();
+            Console.WriteLine("Breathe in...");
+            Thread.Sleep(2000); // Pause for 2 seconds
 
-            totalSecond += breathingInSec + breathingOutSec;
-            //Console.WriteLine(totalSecond);
+            Console.WriteLine("Breathe out...");
+            Thread.Sleep(2000); // Pause for 2 seconds
         }
-
     }
-
 }

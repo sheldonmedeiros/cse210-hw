@@ -1,98 +1,55 @@
 using System;
+using System.Collections.Generic;
+using System.Threading;
 
-public class Activity 
+abstract class Activity
 {
-    //arrtibutes
-    private string _activityName;
-    private string _description;
-    private int _durationSecond;
+    protected string name;
+    protected string description;
+    protected int duration;
 
-    //behaviors
-    public string GetActivityDescription()
+    public Activity(string name, string description)
     {
-        if (_activityName=="Breathing")
-        {
-            _description = "Smile, breathe, and take it slow. Doing this activity will help you to relax.";
-        }
-        else if (_activityName=="Reflecting")
-        {
-            _description = "This activity helps you look back on times in your life when you've shown strength and resilience. It enables you to recognize your own power and how you can apply it in different areas of your life.";
-        }
-        else
-        {
-            _description = "This activity will have you make a list that will help you remember and ponder good moments in your life so that you may continue to have meaning and purpose in your own journey.";
-        }
-        return _description;
+        this.name = name;
+        this.description = description;
     }
 
-    public void DisplayStartMessage()
+    public void Start()
     {
-        Console.Clear();
-        Console.WriteLine($"Welcome to {_activityName} Activity.\n");
-        Console.WriteLine($"{GetActivityDescription()}\n");
-    }
-    public void DisplayEndMessage(int durationSecond)
-    {
-        Console.WriteLine($"\nWell done!!");
-        PauseSpinner(3);
-        Console.WriteLine($"\nYou have completed another {durationSecond} seconds of the {_activityName} Activity.");
-        PauseSpinner(3);
-    }
-    public void DisplayGetReady()
-    {
-        Console.Clear();
-        Console.WriteLine($"Get ready...");
-        PauseSpinner(4);
-        Console.WriteLine();
-    }
-    public void AskDurationSecond()
-    {
-        Console.Write($"How long, in seconds, would you like for your session? ");
-        string second = Console.ReadLine();
-        _durationSecond = int.Parse(second);
-        //return int.Parse(second);
-    }
-    public int GetDurationSecond()
-    {
-        return _durationSecond;
+        Console.WriteLine($"Starting {name}...");
+        Console.WriteLine(description);
 
+        Console.Write("Enter the duration in seconds: ");
+        duration = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Prepare to begin...");
+        Thread.Sleep(3000); // Pause for 3 seconds
+
+        Console.WriteLine("Start!");
+        PerformActivity();
+
+        Console.WriteLine($"Well done! You have completed {name} for {duration} seconds.");
+        Thread.Sleep(3000); // Pause for 3 seconds
     }
 
-    public void PauseSpinner(int second)
+    protected abstract void PerformActivity();
+}
+
+class BreathingActivity : Activity
+{
+    public BreathingActivity() : base("Breathing Activity", "This activity will help you relax by walking you through breathing in and out slowly. Clear your mind and focus on your breathing.")
     {
-        DateTime startTime = DateTime.Now;
-        DateTime futureTime = startTime.AddSeconds(second); 
-        while (DateTime.Now < futureTime)
+    }
+
+    protected override void PerformActivity()
+    {
+        for (int i = 0; i < duration; i++)
         {
-            foreach(string spinner in new List<string>() { "\\", "/", "-" })
-            {
-                Console.Write(spinner);
-                Thread.Sleep(500);
-                Console.Write("\b \b"); // Erase the character
-            }
-        }        
-    }
+            Console.WriteLine("Breathe in...");
+            Thread.Sleep(2000); // Pause for 2 seconds
 
-    public void PauseCountdown(int second)
-    {
-        // string countdownResult = "";
-        DateTime startTime = DateTime.Now;
-        DateTime futureTime = startTime.AddSeconds(second); 
-        while (second != 0)
-        {
-            //countdownResult += second.ToString();
-            Console.Write(second);
-            Thread.Sleep(1000);
-            Console.Write("\b \b");
-            //countdownResult += "\b \b";
-            second -= 1;
+            Console.WriteLine("Breathe out...");
+            Thread.Sleep(2000); // Pause for 2 seconds
         }
     }
-
-    //constructors
-    public Activity(string activityName)
-    {
-        _activityName = activityName;
-    }
-
 }

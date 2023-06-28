@@ -1,64 +1,44 @@
-using System;
+
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop04 World!");
-        //Console.WriteLine("Hello Develop04 World!");
+        Console.WriteLine("Welcome to the Activity Program!");
 
-        bool run = true;
-        while (run != false)
+        while (true)
         {
-            //menu
-            Menu menu = new Menu();
-            menu.DisplayMenu();
-            string ans = menu.AskBehavior();
-            if (ans == "1") //Breathing
+            Console.WriteLine("\nSelect an activity:");
+            Console.WriteLine("1. Breathing Activity");
+            Console.WriteLine("2. Reflection Activity");
+            Console.WriteLine("3. Listing Activity");
+            Console.WriteLine("0. Exit");
+
+            Console.Write("Enter your choice: ");
+            int choice = int.Parse(Console.ReadLine());
+
+            Console.Clear();
+
+            Activity activity;
+
+            switch (choice)
             {
-                Activity Activity1 = new Activity("Breathing");
-                Activity1.DisplayStartMessage();
-                Activity1.AskDurationSecond();
-                int second = Activity1.GetDurationSecond();
-                Activity1.DisplayGetReady();
-                BreathingActivity breathingActivity = new BreathingActivity();
-                breathingActivity.DisplayBreathing(second,4,6);
-                Activity1.DisplayEndMessage(second);
+                case 1:
+                    activity = new BreathingActivity();
+                    break;
+                case 2:
+                    activity = new ReflectionActivity();
+                    break;
+                case 3:
+                    activity = new ListingActivity();
+                    break;
+                case 0:
+                    return;
+                default:
+                    Console.WriteLine("Invalid choice. Please try again.");
+                    continue;
             }
 
-            else if (ans=="2") //Reflecting
-            {
-                Activity Activity2 = new Activity("Reflecting");
-                Activity2.DisplayStartMessage();
-
-                Activity2.AskDurationSecond();
-                int second = Activity2.GetDurationSecond();
-                Activity2.DisplayGetReady();
-
-                ReflectingActivity reflectingActivity = new ReflectingActivity();
-                reflectingActivity.DisplayRandomPrompt();
-                reflectingActivity.DisplayReflectQuestions(second);
-
-                Activity2.DisplayEndMessage(second);
-            }
-            else if (ans=="3") //Listing
-            {
-                Activity Activity3 = new Activity("Listing");
-                Activity3.DisplayStartMessage();
-
-                Activity3.AskDurationSecond();
-                int second = Activity3.GetDurationSecond();
-                Activity3.DisplayGetReady();
-
-                ListingActivity listingActivity = new ListingActivity();
-                listingActivity.DisplayRandomPrompt();
-                listingActivity.ListItems(second);
-
-                Activity3.DisplayEndMessage(second);
-            }
-            else if (ans=="4")
-            {
-                run = false;
-            }
+            activity.Start();
         }
     }
 }
